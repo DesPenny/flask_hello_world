@@ -1,37 +1,20 @@
-from flask import Flask
+import os
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
-@app.route("/hello")
+@app.route("/")
 def hello_world():
-    return "Hello World!"
+    return render_template('template.html', my_string="Hello World!")
   
 @app.route("/hello/<name>")
 def hello_person(name):
-    html = """
-        <h1>
-            Hello {}!
-        </h1>
-        <p>
-            Here's a picture of a kitten.  Awww...
-        </p>
-        <img src="http://placekitten.com/g/200/300">
-    """
-    return html.format(name.title())
+    return render_template('template.html', my_string="Hello " + name)
   
 @app.route("/jedi/<name>/<surname>")
 def hello_jedi(name,surname):
     jedi_name =  surname[:3] + name[:2]
-    html = """
-        <h1>
-            Hello {} {}!
-        </h1>
-        
-        <p>
-            Your Jedi name is {}!
-        </p>
-         """
-    return html.format(name.title(), surname.title(), jedi_name.title())
+    return render_template('template.html', my_string= "Your Jedi name is " + jedi_name)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080)
